@@ -5,5 +5,9 @@
   user: vagrant
   become: True
 
+  handlers:
+    - name: reload networking
+      command: ifreload -a
+
   roles:
     - interfaces
