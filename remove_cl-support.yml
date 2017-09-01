@@ -20,5 +20,14 @@
 
     - wait_for: timeout=0
 
-    - name: Removing CL-Support files
-      shell: rm -v /var/support/cl_support*
+    - name: 'collect files'
+      find:
+        paths: "/var/support/"
+        hidden: True
+        recurse: False
+      register: collected_files
+
+    - debug: var="{{ collected_files }}"
+    
+#    - name: Removing CL-Support files
+#      shell: rm -v /var/support/cl_support*
