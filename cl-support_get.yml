@@ -1,5 +1,5 @@
 ---
-- hosts: spine-1
+- hosts: all
   remote_user: cumulus
   gather_facts: no
   become: yes
