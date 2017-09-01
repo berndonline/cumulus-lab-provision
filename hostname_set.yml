@@ -18,7 +18,7 @@
     - name: Remote cumulus hostname from Local DNS Resolution 
       lineinfile: dest=/etc/hosts
                   regexp='^.*    cumulus' backrefs=no
-                  line='127.0.1.1    cumulus'
+                  line='127.0.1.1  cumulus'
                   state=absent
     - name: Add Local DNS Resolution for our Hostname
       lineinfile: dest=/etc/hosts
