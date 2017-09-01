@@ -22,10 +22,10 @@
 
     - name: 'collect files'
       find:
-        paths: "/var/support/"
+        paths: "/var/support"
         hidden: True
         recurse: False
-        file_type: any
+        file_type: file
       register: collected_files
 
     - debug: var="{{ collected_files }}"
