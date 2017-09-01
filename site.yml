@@ -1,0 +1,9 @@
+---
+- hosts: all
+  strategy: free
+
+  user: vagrant
+  become: True
+
+  roles:
+    - interfaces
