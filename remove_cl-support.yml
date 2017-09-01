@@ -18,7 +18,7 @@
     - debug: msg="Waiting 10 Seconds to make sure that you're really sure..."
       failed_when: "'yes' not in are_you_sure"
 
-    - wait_for: timeout=0
+    - wait_for: timeout=10
 
     - name: 'collect cl-support files'
       find:
