@@ -3,14 +3,20 @@
   remote_user: cumulus
   gather_facts: no
   become: yes
-  vars:
-    ansible_become_pass: "CumulusLinux!"
+
+  handlers:
+    - name: apply hostname
+      command: hostname -F /etc/hostname
+
   tasks:
-    - name: Write the Hostname to File
-      shell: echo "{{ inventory_hostname }}" > /etc/hostname
-
-    - name: Apply Hostname
-      shell: hostname -F /etc/hostname
-
-    - name: Add Local DNS Resolution for our Hostname
-      lineinfile: dest=/etc/hosts line="127.0.1.1    {{ inventory_hostname }}" regexp=^.*127.0.1.1
+    - name: write hostname
+      lineinfile: dest=/etc/hostname
+                  regexp='^' backrefs=no
+                  line='{{ ansible_host }}'
+                  state=present
+      notify: apply hostname
+    - name: dd Local DNS Resolution for our Hostname
+      lineinfile: dest=/etc/hosts
+                  regexp='^.*    {{ ansible_host }}' backrefs=no
+                  line='127.0.1.1    {{ ansible_host }}'
+                  state=present
