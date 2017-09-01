@@ -7,13 +7,13 @@
     ansible_become_pass: "CumulusLinux!"
   tasks:
     - name: fetch ports.conf
-      fetch: dest=backup/{{ansible_host}}/ports.conf src=/etc/cumulus/ports.conf flat=yes
+      fetch: dest=backup/{{inventory_host}}/ports.conf src=/etc/cumulus/ports.conf flat=yes
 
     - name: fetch interfaces
-      fetch: dest=backup/{{ansible_host}}/interfaces src=/etc/network/interfaces flat=yes
+      fetch: dest=backup/{{inventory_host}}/interfaces src=/etc/network/interfaces flat=yes
 
     - name: copy quagga daemons file
-      fetch: dest=backup/{{ansible_host}}/daemons src=/etc/quagga/daemons flat=yes
+      fetch: dest=backup/{{inventory_host}}/daemons src=/etc/quagga/daemons flat=yes
 
     - name: copy Quagga.conf
-      fetch: dest=backup/{{ansible_host}}/Quagga.conf src=/etc/quagga/Quagga.conf flat=yes
+      fetch: dest=backup/{{inventory_host}}/Quagga.conf src=/etc/quagga/Quagga.conf flat=yes
