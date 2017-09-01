@@ -9,5 +9,12 @@
     - name: reload networking
       command: ifreload -a
 
+    - name: reload quagga
+      service: name=quagga state=reloaded
+
+    - name: start quagga
+      service: name=quagga state=started
+
   roles:
     - interfaces
+    - quagga
