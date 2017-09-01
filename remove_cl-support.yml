@@ -28,7 +28,16 @@
         file_type: file
       register: collected_files
 
-    - debug: msg="{{ collected_files }}"
+    - name: remove collected cl-support files
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: >
+        {{
+        collected_files.files
+        }}
+
+#    - debug: msg="{{ collected_files }}"
     
 #    - name: Removing CL-Support files
 #      shell: rm -v /var/support/cl_support*
