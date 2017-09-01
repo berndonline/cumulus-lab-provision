@@ -1,0 +1,19 @@
+---
+- hosts: all
+  remote_user: cumulus
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_become_pass: "CumulusLinux!"
+  handlers:
+    - name: ifreload
+      command: ifreload -a
+    - name: restart quagga
+      service: name=quagga state=restarted
+  tasks:
+    - name: deploys default interface configuration
+      template: src=templates/remove_interfaces.j2 dest=/etc/network/interfaces
+      notify: ifreload
+    - name: deploys quagga configuration
+      template: src=templates/remove_quagga.conf.j2 dest=/etc/quagga/Quagga.conf
+      notify: restart quagga

@@ -1,0 +1,52 @@
+## File managed by Ansible ##
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0
+    address 192.168.100.207/24
+
+# Peerlink
+auto peerlink
+iface peerlink
+    bond-slaves swp11
+
+auto peerlink.4093
+iface peerlink.4093
+    address 169.254.1.1/30
+    clagd-peer-ip 169.254.1.2
+    clagd-backup-ip 192.168.100.208
+    clagd-sys-mac 44:38:39:FF:40:93
+
+auto bond1
+iface bond1
+    alias uplink-spine
+    bond-slaves swp1 swp2
+    clag-id 1
+
+
+auto swp3
+iface swp3
+    alias web-server
+    bridge-access 100
+
+auto swp4
+iface swp4
+    alias app-server
+    bridge-access 101
+
+auto swp5
+iface swp5
+    alias db-server
+    bridge-access 102
+
+
+auto bridge
+iface bridge
+      bridge-vlan-aware yes
+      bridge-ports bond1 swp3 swp4 swp5
+      bridge-stp on
+      bridge-vids 100-199

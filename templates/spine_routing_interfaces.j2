@@ -1,0 +1,19 @@
+## File managed by Ansible ##
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0
+    address {{ mgmt_ip }}/24
+    gateway 192.168.100.2
+
+{% for item in spine_interfaces %}
+auto {{ item.port }}
+iface {{ item.port }}
+    alias {{ item.desc }}
+    address {{ item.address }}
+
+{% endfor %}

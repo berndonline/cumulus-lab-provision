@@ -1,0 +1,34 @@
+---
+- hosts: all
+  remote_user: cumulus
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_become_pass: "CumulusLinux!"
+    spine_interfaces:
+      - { port: swp1, desc: leaf-1, address: "{{ swp1_address}}" }
+      - { port: swp2, desc: leaf-2, address: "{{ swp2_address}}" }
+      - { port: swp11, desc: layer3_peerlink, address: "{{ peer_address}}" }
+    leaf_interfaces:
+      - { port: swp1, desc: spine-1, address: "{{ swp1_address}}" }
+      - { port: swp2, desc: spine-2, address: "{{ swp2_address}}" }
+  handlers:
+    - name: ifreload
+      command: ifreload -a
+    - name: restart quagga
+      service: name=quagga state=restarted
+  tasks:
+    - name: deploys spine interface configuration
+      template: src=templates/spine_routing_interfaces.j2 dest=/etc/network/interfaces
+      when: "'spine' in group_names"
+      notify: ifreload
+    - name: deploys leaf interface configuration
+      template: src=templates/leaf_routing_interfaces.j2 dest=/etc/network/interfaces
+      when: "'leaf' in group_names"
+      notify: ifreload
+    - name: deploys quagga configuration
+      template: src=templates/quagga.conf.j2 dest=/etc/quagga/Quagga.conf
+      notify: restart quagga
+    - name: deploy quagga deamons config file
+      template: src=templates/daemons.j2 dest=/etc/quagga/daemons
+      notify: restart quagga

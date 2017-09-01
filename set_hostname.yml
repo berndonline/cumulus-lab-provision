@@ -1,0 +1,16 @@
+---
+- hosts: all
+  remote_user: cumulus
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_become_pass: "CumulusLinux!"
+  tasks:
+    - name: Write the Hostname to File
+      shell: echo "{{ ansible_host }}" > /etc/hostname
+
+    - name: Apply Hostname
+      shell: hostname -F /etc/hostname
+
+    - name: Add Local DNS Resolution for our Hostname
+      lineinfile: dest=/etc/hosts line="127.0.1.1    {{ ansible_host }}" regexp=^.*127.0.1.1

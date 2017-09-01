@@ -1,0 +1,23 @@
+mgmt_ip: 192.168.100.205
+peerlink_address: 169.254.1.1/30
+peerlink_port: "swp11"
+peerlink_vlan: "4094"
+clagd_mac: "44:38:39:FF:40:94"
+clagd_peer: 169.254.1.2
+clagd_backup: 192.168.100.206
+vlan100_address: 10.1.0.252/24
+vlan101_address: 10.1.1.252/24
+vlan102_address: 10.1.2.252/24
+swp1_address: 10.0.1.1/30
+swp2_address: 10.0.2.5/30
+peer_address: 10.0.0.1/30
+bgp_as: 65000
+bgp_router_id: 10.0.0.1
+bgp_neighbor:
+  - { neighbor_address: 10.0.0.2, bgp_remote_as: internal }
+  - { neighbor_address: 10.0.1.2, bgp_remote_as: external }
+  - { neighbor_address: 10.0.2.6, bgp_remote_as: external }
+bgp_network:
+  - 10.0.0.0/30
+  - 10.0.1.0/30
+  - 10.0.2.4/30
