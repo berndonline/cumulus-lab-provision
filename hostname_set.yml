@@ -12,11 +12,11 @@
     - name: write hostname
       lineinfile: dest=/etc/hostname
                   regexp='^' backrefs=no
-                  line='{{ ansible_host }}'
+                  line='{{ inventory_hostname }}'
                   state=present
       notify: apply hostname
     - name: dd Local DNS Resolution for our Hostname
       lineinfile: dest=/etc/hosts
-                  regexp='^.*    {{ ansible_host }}' backrefs=no
-                  line='127.0.1.1    {{ ansible_host }}'
+                  regexp='^.*    {{ inventory_hostname }}' backrefs=no
+                  line='127.0.1.1    {{ inventory_hostname }}'
                   state=present
