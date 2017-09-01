@@ -28,7 +28,7 @@
         file_type: file
       register: collected_files
 
-    - debug: var="{{ collected_files }}"
+    - debug: msg="{{ collected_files }}"
     
 #    - name: Removing CL-Support files
 #      shell: rm -v /var/support/cl_support*
