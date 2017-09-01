@@ -20,7 +20,7 @@
 
     - wait_for: timeout=0
 
-    - name: 'collect files'
+    - name: 'collect cl-support files'
       find:
         paths: "/var/support"
         hidden: True
