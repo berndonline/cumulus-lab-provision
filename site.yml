@@ -2,7 +2,7 @@
 - hosts: all
   strategy: free
 
-  user: vagrant
+  user: cumulus
   become: True
 
   handlers:
