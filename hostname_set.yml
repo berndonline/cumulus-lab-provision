@@ -15,7 +15,7 @@
                   line='{{ inventory_hostname }}'
                   state=present
       notify: apply hostname
-    - name: Remote cumulus hostname from Local DNS Resolution 
+    - name: Remove cumulus hostname from Local DNS Resolution 
       lineinfile: dest=/etc/hosts
                   regexp='^.*  cumulus' backrefs=no
                   line='127.0.1.1  cumulus'
