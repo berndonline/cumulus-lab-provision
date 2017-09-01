@@ -1,4 +1,6 @@
 ---
+- include: hostname_set.yml
+
 - hosts: all
   strategy: free
 
