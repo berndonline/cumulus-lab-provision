@@ -20,3 +20,4 @@
                   regexp='^.*    {{ inventory_hostname }}' backrefs=no
                   line='127.0.1.1    {{ inventory_hostname }}'
                   state=present
+      notify: apply hostname
