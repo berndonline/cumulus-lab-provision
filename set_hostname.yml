@@ -13,4 +13,4 @@
       shell: hostname -F /etc/hostname
 
     - name: Add Local DNS Resolution for our Hostname
-      lineinfile: dest=/etc/hosts line="127.0.1.1    {{ ansible_hostname }}" regexp=^.*127.0.1.1
+      lineinfile: dest=/etc/hosts line="127.0.1.1    {{ inventory_hostname }}" regexp=^.*127.0.1.1
