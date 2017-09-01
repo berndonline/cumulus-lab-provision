@@ -25,6 +25,7 @@
         paths: "/var/support/"
         hidden: True
         recurse: False
+        file_type: any
       register: collected_files
 
     - debug: var="{{ collected_files }}"
