@@ -19,7 +19,7 @@
       lineinfile: dest=/etc/hosts
                   regexp='^.*    {{ inventory_hostname }}' backrefs=no
                   line='127.0.1.1    cumulus'
-                  state=present
+                  state=absent
     - name: Add Local DNS Resolution for our Hostname
       lineinfile: dest=/etc/hosts
                   regexp='^.*    {{ inventory_hostname }}' backrefs=no
