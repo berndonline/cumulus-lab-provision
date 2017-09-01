@@ -7,7 +7,7 @@
     ansible_become_pass: "CumulusLinux!"
   tasks:
     - name: Write the Hostname to File
-      shell: echo "{{ ansible_hostname }}" > /etc/hostname
+      shell: echo "{{ inventory_hostname }}" > /etc/hostname
 
     - name: Apply Hostname
       shell: hostname -F /etc/hostname
