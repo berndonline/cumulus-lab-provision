@@ -7,17 +7,17 @@
     ansible_become_pass: "CumulusLinux!"
   tasks:
     - name: copy ports.conf
-      copy: src=backup/{{ansible_host}}/ports.conf dest=/etc/cumulus/
+      copy: src=backup/{{inventory_hostname}}/ports.conf dest=/etc/cumulus/
     - name: copy interfaces
-      copy: src=backup/{{ansible_host}}/interfaces dest=/etc/network/
+      copy: src=backup/{{inventory_hostname}}/interfaces dest=/etc/network/
     - name: copy Quagga daemons
-      copy: src=backup/{{ansible_host}}/daemons dest=/etc/quagga/
+      copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/quagga/
     - name: copy Quagga conf
-      copy: src=backup/{{ansible_host}}/Quagga.conf dest=/etc/quagga/
+      copy: src=backup/{{inventory_hostname}}/Quagga.conf dest=/etc/quagga/
 
     - name: reload switchd
-      service: name=switchd state=restarted
+      service: name=switchd state=restarted      
     - name: reload networking
-      command: ifreload -a
+      command: ifreload -a      
     - name: reload quagga
       service: name=quagga state=restarted
