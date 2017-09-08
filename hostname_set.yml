@@ -3,14 +3,26 @@
   remote_user: cumulus
   gather_facts: no
   become: yes
-  vars:
-    ansible_become_pass: "CumulusLinux!"
+
+  handlers:
+    - name: apply hostname
+      command: hostname -F /etc/hostname
+
   tasks:
-    - name: Write the Hostname to File
-      shell: echo "{{ inventory_hostname }}" > /etc/hostname
-
-    - name: Apply Hostname
-      shell: hostname -F /etc/hostname
-
+    - name: write hostname
+      lineinfile: dest=/etc/hostname
+                  regexp='^' backrefs=no
+                  line='{{ inventory_hostname }}'
+                  state=present
+      notify: apply hostname
+    - name: Remove cumulus hostname from Local DNS Resolution 
+      lineinfile: dest=/etc/hosts
+                  regexp='^.*  cumulus' backrefs=no
+                  line='127.0.1.1  cumulus'
+                  state=absent
     - name: Add Local DNS Resolution for our Hostname
-      lineinfile: dest=/etc/hosts line="127.0.1.1    {{ inventory_hostname }}" regexp=^.*127.0.1.1
+      lineinfile: dest=/etc/hosts
+                  regexp='^.*       {{ inventory_hostname }}' backrefs=no
+                  line='127.0.1.1       {{ inventory_hostname }}'
+                  state=present
+      notify: apply hostname
