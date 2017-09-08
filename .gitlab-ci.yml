@@ -16,6 +16,7 @@ staging:
         
 production:
     stage: production
+    when: manual
     script:
         - vagrant up
         - sleep 300
