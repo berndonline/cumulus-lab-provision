@@ -3,8 +3,13 @@ before_script:
     - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
     - cd cumulus-lab-vagrant/
 stages:
+    - validate ansible
     - staging
     - production
+validate:
+    stage: validate ansible
+    script:
+        - bash ../linter.sh
 staging:
     stage: staging
     script:
