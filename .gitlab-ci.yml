@@ -1,11 +1,10 @@
+---
 before_script:
     - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
     - cd cumulus-lab-vagrant/
-        
 stages:
     - staging
     - production
-    
 staging:
     stage: staging
     script:
@@ -13,7 +12,6 @@ staging:
         - sleep 300
         - ansible-playbook ../site.yml
         - vagrant destroy
-        
 production:
     stage: production
     when: manual

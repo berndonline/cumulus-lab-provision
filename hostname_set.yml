@@ -1,8 +1,8 @@
 ---
 - hosts: all
   remote_user: cumulus
-  gather_facts: no
-  become: yes
+  gather_facts: 'no'
+  become: 'yes'
 
   handlers:
     - name: apply hostname
@@ -15,7 +15,7 @@
                   line='{{ inventory_hostname }}'
                   state=present
       notify: apply hostname
-    - name: Remove cumulus hostname from Local DNS Resolution 
+    - name: Remove cumulus hostname from Local DNS Resolution
       lineinfile: dest=/etc/hosts
                   regexp='^.*  cumulus' backrefs=no
                   line='127.0.1.1  cumulus'

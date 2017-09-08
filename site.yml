@@ -5,8 +5,8 @@
   strategy: free
 
   user: cumulus
-  become: True
-  gather_facts: False
+  become: 'True'
+  gather_facts: 'False'
 
   handlers:
     - name: reload networking

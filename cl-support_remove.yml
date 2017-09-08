@@ -1,8 +1,8 @@
 ---
 - hosts: all
   remote_user: cumulus
-  gather_facts: no
-  become: yes
+  gather_facts: 'no'
+  become: 'yes'
   vars:
     ansible_become_pass: "CumulusLinux!"
   vars_prompt:
@@ -10,7 +10,7 @@
     - name: "are_you_sure"
       prompt: "Are you REALLY sure you want to delete the files?"
       default: "no"
-      private: no
+      private: 'no'
 
   tasks:
     - debug: msg="{{ are_you_sure }}"
@@ -23,8 +23,8 @@
     - name: 'collect cl-support files'
       find:
         paths: "/var/support"
-        hidden: True
-        recurse: False
+        hidden: 'True'
+        recurse: 'False'
         file_type: file
       register: collected_files
 

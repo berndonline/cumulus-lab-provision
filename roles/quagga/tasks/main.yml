@@ -12,4 +12,3 @@
 - name: ensure Quagga is running
   service: name=quagga enabled=yes state=started
   when: "'spine' in group_names"
-

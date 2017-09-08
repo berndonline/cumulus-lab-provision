@@ -1,8 +1,8 @@
 ---
 - hosts: all
   remote_user: cumulus
-  gather_facts: no
-  become: yes
+  gather_facts: 'no'
+  become: 'yes'
   vars:
     ansible_become_pass: "CumulusLinux!"
   tasks:
@@ -10,14 +10,16 @@
       command: /usr/cumulus/bin/cl-support
 
     - name: determine newly created support file
-      shell: ls -lt /var/support/cl_support* | head -n2 | tail -n1 | awk '{print $9}' 
+      shell: ls -lt /var/support/cl_support* |
+             head -n2 | tail -n1 | awk '{print $9}'
       register: new_support_file
 
-    - debug: msg="###############################################################"
+    - debug: msg="####################################"
     - debug: msg="New support file is {{ new_support_file.stdout }}"
     - debug: msg="Destination Directory is ./collected_cl_supports/"
-    - debug: msg="###############################################################"
+    - debug: msg="####################################"
 
     - name: collect support file
       when: new_support_file.stdout.find('cl_support') != -1
-      fetch: src={{ new_support_file.stdout }} dest=./collected_cl_supports/ flat=yes fail_on_missing=yes
+      fetch: src={{ new_support_file.stdout }}
+             dest=./collected_cl_supports/ flat=yes fail_on_missing=yes
