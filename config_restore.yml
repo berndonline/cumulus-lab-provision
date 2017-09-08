@@ -16,8 +16,8 @@
       copy: src=backup/{{inventory_hostname}}/Quagga.conf dest=/etc/quagga/
 
     - name: reload switchd
-      service: name=switchd state=restarted      
+      service: name=switchd state=restarted
     - name: reload networking
-      command: ifreload -a      
+      command: ifreload -a
     - name: reload quagga
       service: name=quagga state=restarted

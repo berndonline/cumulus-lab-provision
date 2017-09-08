@@ -7,10 +7,10 @@
     ansible_become_pass: "CumulusLinux!"
   vars_prompt:
 
-  - name: "are_you_sure"
-    prompt: "Are you REALLY sure you want to delete the files?"
-    default: "no"
-    private: no
+    - name: "are_you_sure"
+      prompt: "Are you REALLY sure you want to delete the files?"
+      default: "no"
+      private: no
 
   tasks:
     - debug: msg="{{ are_you_sure }}"
@@ -38,6 +38,5 @@
         }}
 
 #    - debug: msg="{{ collected_files }}"
-    
 #    - name: Removing CL-Support files
 #      shell: rm -v /var/support/cl_support*

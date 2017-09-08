@@ -10,7 +10,7 @@
       command: /usr/cumulus/bin/cl-support
 
     - name: determine newly created support file
-      shell: ls -lt /var/support/cl_support* | head -n2 | tail -n1 | awk '{print $9}'
+      shell: ls -lt /var/support/cl_support* | head -n2 | tail -n1 | awk '{print $9}' 
       register: new_support_file
 
     - debug: msg="###############################################################"

@@ -17,7 +17,7 @@
 #
 ###########################
 
-for file in $(find cumulus-lab-provision -name "*.yml")
+for file in $(find . -name "*.yml")
 do
     yamllint $file
     rc=$?
