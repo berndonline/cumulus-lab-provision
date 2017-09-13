@@ -1,11 +1,12 @@
----
-before_script:
+cript:
     - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
     - cd cumulus-lab-vagrant/
 stages:
     - validate ansible
     - staging
+    - staging_rollback
     - production
+    - production_rollback
 validate:
     stage: validate ansible
     script:
@@ -18,6 +19,11 @@ staging:
         - sleep 300
         - ansible-playbook ../site.yml
         - vagrant destroy
+staging_rollback:
+    stage: staging_rollback
+    when: on_failure
+    script:
+        - vagrant destroy
 production:
     stage: production
     when: manual
@@ -25,6 +31,13 @@ production:
         - vagrant up
         - sleep 300
         - ansible-playbook ../site.yml
+        - vagrant destroy
+    only:
+        - master
+production_rollback:
+    stage: production_rollback
+    when: on_failure
+    script:
         - vagrant destroy
     only:
         - master
