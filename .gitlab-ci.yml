@@ -13,6 +13,7 @@ validate:
 staging:
     stage: staging
     script:
+        - python ./topology_converter.py ./topology-noservers.dot -p libvirt --ansible-hostfile
         - vagrant up
         - sleep 300
         - ansible-playbook ../site.yml
