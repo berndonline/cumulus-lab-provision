@@ -1,7 +1,7 @@
 ---
 - include: hostname_set.yml
 
-- hosts: all
+- hosts: network
   strategy: free
 
   user: cumulus
