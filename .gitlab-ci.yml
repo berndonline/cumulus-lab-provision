@@ -19,7 +19,6 @@ staging:
         - vagrant up
         - sleep 300
         - ansible-playbook ../site.yml
-    after_script:
         - vagrant destroy
 production:
     stage: production
