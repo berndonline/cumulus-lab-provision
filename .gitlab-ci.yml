@@ -1,28 +1,25 @@
-cript:
-    - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
-    - cd cumulus-lab-vagrant/
+---
 stages:
     - validate ansible
     - staging
-    - staging_rollback
     - production
     - production_rollback
 validate:
     stage: validate ansible
     script:
-        - bash ../linter.sh
+        - bash ./linter.sh
 staging:
+    before_script:
+        - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
+        - cd cumulus-lab-vagrant/
+        - python ./topology_converter.py ./topology-noservers.dot
+          -p libvirt --ansible-hostfile
     stage: staging
     script:
-        - python ./topology_converter.py ./topology-noservers.dot -p libvirt --ansible-hostfile
         - vagrant up
         - sleep 300
         - ansible-playbook ../site.yml
-        - vagrant destroy
-staging_rollback:
-    stage: staging_rollback
-    when: on_failure
-    script:
+    after_script:
         - vagrant destroy
 production:
     stage: production
@@ -38,6 +35,7 @@ production_rollback:
     stage: production_rollback
     when: on_failure
     script:
-        - vagrant destroy
+        - sleep 60
     only:
         - master
+
