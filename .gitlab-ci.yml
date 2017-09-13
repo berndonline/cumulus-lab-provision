@@ -32,7 +32,7 @@ production:
         - vagrant up mgmt-1 mgmt-server
         - sleep 300
         - vagrant up
-        - sleep 300
+        - sleep 600
         - ansible-playbook ../site.yml
         - vagrant destroy
     only:
