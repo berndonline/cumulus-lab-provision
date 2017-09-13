@@ -12,7 +12,7 @@ staging:
     before_script:
         - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
         - cd cumulus-lab-vagrant/
-        - python ./topology_converter.py ./topology-noservers.dot
+        - python ./topology_converter.py ./topology-staging.dot
           -p libvirt --ansible-hostfile
     stage: staging
     script:
@@ -21,9 +21,16 @@ staging:
         - ansible-playbook ../site.yml
         - vagrant destroy
 production:
+    before_script:
+        - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
+        - cd cumulus-lab-vagrant/
+        - python ./topology_converter.py ./topology-production.dot
+          -p libvirt --ansible-hostfile
     stage: production
     when: manual
     script:
+        - vagrant up mgmt-1 mgmt-server
+        - sleep 300
         - vagrant up
         - sleep 300
         - ansible-playbook ../site.yml
