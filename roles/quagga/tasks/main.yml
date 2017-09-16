@@ -12,4 +12,3 @@
   template: src=templates/quagga.j2 dest=/etc/quagga/Quagga.conf
   notify: reload quagga
   when: "'spine' in group_names"
-

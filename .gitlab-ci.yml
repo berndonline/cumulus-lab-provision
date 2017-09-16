@@ -3,7 +3,6 @@ stages:
     - validate ansible
     - staging
     - production
-    - production_rollback
 validate:
     stage: validate ansible
     script:
@@ -34,14 +33,7 @@ production:
         - vagrant up
         - sleep 600
         - ansible-playbook ../site.yml
+        - vagrant ssh spine-1 -c 'netq show agents'
         - vagrant destroy
     only:
         - master
-production_rollback:
-    stage: production_rollback
-    when: on_failure
-    script:
-        - sleep 60
-    only:
-        - master
-
