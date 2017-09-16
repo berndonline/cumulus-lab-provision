@@ -15,10 +15,7 @@ staging:
           -p libvirt --ansible-hostfile
     stage: staging
     script:
-        - vagrant up
-        - sleep 300
-        - ansible-playbook ../site.yml
-        - vagrant destroy
+        - bash ../staging.sh
 production:
     before_script:
         - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
@@ -28,12 +25,6 @@ production:
     stage: production
     when: manual
     script:
-        - vagrant up mgmt-1 mgmt-server
-        - sleep 300
-        - vagrant up
-        - sleep 300
-        - ansible-playbook ../site.yml
-        - vagrant ssh spine-1 -c 'netq show agents'
-        - vagrant destroy
+        - bash ../production.sh
     only:
         - master
