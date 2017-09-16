@@ -31,7 +31,7 @@ production:
         - vagrant up mgmt-1 mgmt-server
         - sleep 300
         - vagrant up
-        - sleep 600
+        - sleep 300
         - ansible-playbook ../site.yml
         - vagrant ssh spine-1 -c 'netq show agents'
         - vagrant destroy
