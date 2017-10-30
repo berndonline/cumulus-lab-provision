@@ -1,0 +1,37 @@
+---
+- hosts: spine leaf
+  gather_facts: False
+  user: cumulus
+
+  tasks:
+     - name: Gather Clag info in JSON
+       command: netq check clag json
+       register: result
+       run_once: true
+       failed_when: "'ERROR' in result.stdout"
+
+     - name: stdout string into json
+       set_fact: json_output="{{result.stdout | from_json }}"
+       run_once: true
+
+     - name: output of json_output variable
+       debug:
+         var: json_output
+       run_once: true
+
+     - name: check failed clag members
+       debug: msg="Check failed clag members"
+       when: json_output["failedNodes"]|length == 0
+       run_once: true
+
+     - name: clag members status failed
+       fail: msg="Device {{item['node']}}, Why node is in failed state? {{item['reason']}}"
+       with_items:  "{{json_output['failedNodes']}}"
+       run_once: true
+
+     - name: clag members status warning
+       fail: msg="Device {{item['node']}}, Why node is in warning state? {{item['reason']}}"
+       when: json_output["warningNodes"] is defined
+       with_items:  "{{json_output['warningNodes']}}"
+       run_once: true
+
