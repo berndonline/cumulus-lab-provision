@@ -1,7 +1,7 @@
 ---
 - hosts: spine leaf
-  gather_facts: False
-  user: cumulus
+  gather_facts: "False"
+  user: "cumulus"
 
   tasks:
      - name: Gather Clag info in JSON
@@ -15,8 +15,7 @@
        run_once: true
 
      - name: output of json_output variable
-       debug:
-         var: json_output
+       debug: var=json_output
        run_once: true
 
      - name: check failed clag members
@@ -25,13 +24,14 @@
        run_once: true
 
      - name: clag members status failed
-       fail: msg="Device {{item['node']}}, Why node is in failed state? {{item['reason']}}"
-       with_items:  "{{json_output['failedNodes']}}"
+       fail: msg="Device {{item['node']}},
+                 Why node is in failed state? {{item['reason']}}"
+       with_items: "{{json_output['failedNodes']}}"
        run_once: true
 
      - name: clag members status warning
-       fail: msg="Device {{item['node']}}, Why node is in warning state? {{item['reason']}}"
+       fail: msg="Device {{item['node']}},
+                 Why node is in warning state? {{item['reason']}}"
        when: json_output["warningNodes"] is defined
-       with_items:  "{{json_output['warningNodes']}}"
+       with_items: "{{json_output['warningNodes']}}"
        run_once: true
-
