@@ -1,25 +1,79 @@
 ## File Managed by Ansible ##
 
+{% if loopback is defined %}
 auto lo
 iface lo inet loopback
 address {{ loopback }}
+{% endif %}
 
+{% if vrf is defined %}
 {% for item in vrf %}
 auto {{ item }}
 iface {{ item }}
     vrf-table auto
 {% endfor %}
+{% endif %}
 
 {% if interfaces is defined %}
 {% for port, value in interfaces.items() %}
 auto {{ port }}
 iface {{ port }}
+{% if 'alias' in value %}
     alias {{ value.alias }}
+{% endif %}
+{% if value and 'link_speed' in value %}
+    link-speed {{ value['link_speed'] }}
+{% endif %}
+{% if value and 'link_duplex' in value %}
+    link-duplex {{ value['link_duplex']|ternary('full', 'half') }}
+{% endif %}
+{% if value and 'mtu' in value %}
+    mtu {{ value.mtu }}
+{% endif %}
+{% if value and 'bridge_access' in value  %}
+    bridge-access {{ value.bridge_access }}
+{% endif %}
+{% if value and 'bridge_vids' in value  %}
+    bridge-vids {{ value['bridge_vids'] }}
+{% endif %}
+{% if value and 'bridge_pvid' in value  %}
+    bridge-pvid {{ value.bridge_pvid }}
+{% endif %}
+{% if value and 'address' in value %}
     address {{ value.address }}
+{% endif %}
+{% if value and 'vrf' in value %}
     vrf {{ value.vrf }}
-{% endfor %}
 {% endif %}
 
+{% endfor %}
+{% endif %}
+{% if bonds is defined %}
+{% for port, value in bonds.items() %}
+auto {{ port }}
+iface {{ port }}
+{% if 'alias' in value %}
+    alias {{ value.alias }}
+{% endif %}
+{% if value.lacp_bypass_allow is defined %}
+    bond-lacp-bypass-allow 1
+{% endif %}
+{% if value.clag_id is defined %}
+    clag-id {{ value.clag_id }}
+{% endif %}
+{% if value and 'bridge_access' in value  %}
+    bridge-access {{ value.bridge_access }}
+{% endif %}
+{% if value and 'bridge_vids' in value  %}
+    bridge-vids {{ value['bridge_vids'] }}
+{% endif %}
+{% if value and 'bridge_pvid' in value  %}
+    bridge-pvid {{ value.bridge_pvid }}
+{% endif %}
+    bond-slaves {{ value.bond_slaves }}
+
+{% endfor %}
+{% endif %}
 {% if peerlink is defined %}
 auto peerlink
 iface peerlink
@@ -43,7 +97,9 @@ iface bridge
     bridge-ports {{ bridge.ports }}
     bridge-vids {{ bridge.vids }}
     bridge-stp on
+{% endif %}
 
+{% if bridge is defined %}
 {% for vlan_id, value in vlans.items() %}
 auto bridge.{{ vlan_id }}
 iface bridge.{{ vlan_id }}

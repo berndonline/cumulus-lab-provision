@@ -11,7 +11,7 @@ staging:
     before_script:
         - git clone https://github.com/berndonline/cumulus-lab-vagrant.git
         - cd cumulus-lab-vagrant/
-        - python ./topology_converter.py ./topology-staging.dot
+        - python ./topology_converter.py ./topology-production.dot
           -p libvirt --ansible-hostfile
     stage: staging
     script:

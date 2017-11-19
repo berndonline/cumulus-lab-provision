@@ -1,5 +1,4 @@
 ---
-# - include: hostname_set.yml
 
 - hosts: network
   strategy: free
@@ -10,14 +9,21 @@
 
   handlers:
     - name: reload networking
-      command: ifreload -a
+      command: "{{item}}"
+      with_items:
+        - ifreload -a
+        - sleep 10
 
     - name: reload frr
       service: name=frr state=reloaded
+
+    - name: apply hostname
+      command: hostname -F /etc/hostname
 
     - name: restart netq agent
       command: netq config agent restart
 
   roles:
+    - hostname
     - interfaces
     - routing

@@ -1,6 +1,11 @@
-vagrant up --color
-exit_code=$?
+grant up mgmt-1 mgmt-server --color
 sleep 300
+vagrant up spine-1 spine-2 --color
+sleep 60
+vagrant up edge-1 edge-2 --color
+sleep 60
+vagrant up --color
+sleep 120
 export ANSIBLE_FORCE_COLOR=true
 ansible-playbook ../site.yml
 exit_code=$?

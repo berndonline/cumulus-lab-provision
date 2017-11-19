@@ -5,7 +5,7 @@
 
   tasks:
      - name: Gather Clag info in JSON
-       command: netq check clag json
+       command: netq check bgp json
        register: result
        run_once: true
        failed_when: "'ERROR' in result.stdout"
@@ -18,20 +18,13 @@
        debug: var=json_output
        run_once: true
 
-     - name: check failed clag members
-       debug: msg="Check failed clag members"
+     - name: check failed bgp members
+       debug: msg="Check failed bgp members"
        when: json_output["failedNodes"]|length == 0
        run_once: true
 
-     - name: clag members status failed
+     - name: bgp members status failed
        fail: msg="Device {{item['hostname']}},
-                 Why node is in failed state? {{item['error']}}"
+                 Why node is in failed state? {{item['reason']}}"
        with_items: "{{json_output['failedNodes']}}"
-       run_once: true
-
-     - name: clag members status warning
-       fail: msg="Device {{item['hostname']}},
-                 Why node is in warning state? {{item['error']}}"
-       when: json_output["warningNodes"] is defined
-       with_items: "{{json_output['warningNodes']}}"
        run_once: true

@@ -13,6 +13,7 @@ bgp_fabric:
 bgp_networks:
   - 10.255.0.4/32
   - 10.0.255.0/28
+
 peerlink:
   bond_slaves: swp53 swp54
   mtu: 9216
