@@ -1,0 +1,36 @@
+---
+
+loopback: 10.255.0.4/32
+
+bgp_fabric:
+  asn: 65001
+  vrf: prod-transit
+  router_id: 10.255.0.4
+  neighbor:
+    - swp51
+    - swp52
+
+bgp_networks:
+  - 10.255.0.4/32
+  - 10.0.255.0/28
+peerlink:
+  bond_slaves: swp53 swp54
+  mtu: 9216
+  vlan: 4094
+  address: 169.254.1.2/30
+  clagd_peer_ip: 169.254.1.1
+  clagd_backup_ip: 192.168.100.3
+  clagd_sys_mac: 44:38:39:FF:40:94
+  clagd_priority: 8192
+
+bridge:
+  ports: peerlink
+  vids: 901
+
+vlans:
+  901:
+    alias: edge-transit-901
+    vrf: prod-transit
+    vipv4: 10.0.255.14/28
+    vmac:  00:00:5e:00:09:01
+    pipv4: 10.0.255.13/28

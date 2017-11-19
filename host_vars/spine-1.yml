@@ -1,0 +1,20 @@
+---
+
+loopback: 10.255.0.1/32
+
+bgp_fabric:
+  asn: 65000
+  vrf: prod-transit
+  router_id: 10.255.0.1
+  neighbor:
+    - swp1
+    - swp2
+    - swp3
+    - swp4
+    - swp5
+    - swp6
+    - swp51
+    - swp52
+
+bgp_networks:
+  - 10.255.0.1/32

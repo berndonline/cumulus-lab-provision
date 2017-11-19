@@ -1,5 +1,5 @@
 ---
-- include: hostname_set.yml
+#- include: hostname_set.yml
 
 - hosts: network
   strategy: free
@@ -12,9 +12,12 @@
     - name: reload networking
       command: ifreload -a
 
-    - name: reload quagga
-      service: name=quagga state=reloaded
+    - name: reload frr
+      service: name=frr state=reloaded
+
+    - name: restart netq agent
+      command: netq config agent restart
 
   roles:
     - interfaces
-    - quagga
+    - routing

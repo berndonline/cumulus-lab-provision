@@ -1,0 +1,36 @@
+## File Managed by Ansible ##
+## Test ##
+!
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog
+!
+{% if bgp_fabric is defined %}
+{% if bgp_fabric.neighbor is defined %}
+{% for item in bgp_fabric.neighbor %}
+interface {{ item }}
+ ipv6 nd ra-interval 10
+ no ipv6 nd suppress-ra
+!
+{% endfor %}
+{% endif %}
+router bgp {{ bgp_fabric.asn }} vrf {{ bgp_fabric.vrf }}
+ bgp router-id {{ bgp_fabric.router_id }}
+ bgp bestpath as-path multipath-relax
+ bgp bestpath compare-routerid
+ neighbor fabric peer-group
+ neighbor fabric remote-as external
+ neighbor fabric description Internal Fabric Network
+ neighbor fabric capability extended-nexthop
+{% for item in bgp_fabric.neighbor %}
+ neighbor {{ item }} interface peer-group fabric
+{% endfor %}
+
+ address-family ipv4 unicast
+{% for item in bgp_networks %}
+  network {{ item }}
+{% endfor %}
+ exit-address-family
+{% endif %}

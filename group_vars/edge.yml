@@ -1,0 +1,19 @@
+---
+
+peerlink:
+  bond-slaves: swp53 swp54
+  mtu: 9216
+
+vrf:
+  - prod-transit
+
+interfaces:
+  swp51:
+    alias: uplink-spine-1
+    address: "{{ loopback }}"
+    vrf: prod-transit
+
+  swp52:
+    alias: uplink-spine-1
+    address: "{{ loopback }}"
+    vrf: prod-transit

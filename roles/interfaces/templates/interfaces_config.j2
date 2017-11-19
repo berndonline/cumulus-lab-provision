@@ -1,3 +1,55 @@
 ## File Managed by Ansible ##
 
+auto lo
+iface lo inet loopback
+address {{ loopback }}
 
+{% for item in vrf %}
+auto {{ item }}
+iface {{ item }}
+    vrf-table auto
+{% endfor %}
+
+{% if interfaces is defined %}
+{% for port, value in interfaces.items() %}
+auto {{ port }}
+iface {{ port }}
+    alias {{ value.alias }}
+    address {{ value.address }}
+    vrf {{ value.vrf }}
+{% endfor %}
+{% endif %}
+
+{% if peerlink is defined %}
+auto peerlink
+iface peerlink
+    bond-slaves {{ peerlink.bond_slaves }}
+    mtu {{ peerlink.mtu }}
+
+auto peerlink.{{ peerlink.vlan }}
+iface peerlink.{{ peerlink.vlan }}
+    address {{ peerlink.address }}
+    clagd-peer-ip {{ peerlink.clagd_peer_ip }}
+    clagd-backup-ip {{ peerlink.clagd_backup_ip }}
+    clagd-sys-mac {{ peerlink.clagd_sys_mac }}
+    clagd-enable yes
+    clagd-priority {{ peerlink.clagd_priority }}
+{% endif %}
+
+{% if bridge is defined %}
+auto bridge
+iface bridge
+    bridge-vlan-aware yes
+    bridge-ports {{ bridge.ports }}
+    bridge-vids {{ bridge.vids }}
+    bridge-stp on
+
+{% for vlan_id, value in vlans.items() %}
+auto bridge.{{ vlan_id }}
+iface bridge.{{ vlan_id }}
+    alias {{ value.alias }}
+    vrf {{ value.vrf }}
+    address {{ value.pipv4 }}
+    address-virtual {{ value.vmac }} {{ value.vipv4 }}
+{% endfor %}
+{% endif %}
