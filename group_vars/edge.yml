@@ -1,9 +1,5 @@
 ---
 
-peerlink:
-  bond-slaves: swp53 swp54
-  mtu: 9216
-
 vrf:
   - prod-transit
 
