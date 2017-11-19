@@ -32,5 +32,5 @@ vlans:
     alias: edge-transit-901
     vrf: prod-transit
     vipv4: 10.0.255.14/28
-    vmac:  00:00:5e:00:09:01
+    vmac: 00:00:5e:00:09:01
     pipv4: 10.0.255.13/28

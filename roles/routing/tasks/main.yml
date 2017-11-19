@@ -8,6 +8,6 @@
 
 - name: write the FRR config file
   template: src=templates/frr.j2 dest=/etc/frr/frr.conf
-  notify: 
+  notify:
     - reload frr
     - restart netq agent

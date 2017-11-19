@@ -33,5 +33,5 @@ vlans:
     alias: Prod-Server-103
     vrf: prod-transit
     vipv4: 10.0.3.254/24
-    vmac:  00:00:5e:00:01:03
+    vmac: 00:00:5e:00:01:03
     pipv4: 10.0.3.252/24
