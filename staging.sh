@@ -1,4 +1,4 @@
-vagrant up mgmt-1 mgmt-server --color
+vagrant up mgmt-1 netq-1 --color
 sleep 300
 vagrant up spine-1 spine-2 --color
 sleep 60
