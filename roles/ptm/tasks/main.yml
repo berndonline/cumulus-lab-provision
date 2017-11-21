@@ -1,0 +1,6 @@
+---
+
+- name: create ptmd topology file
+  template: src=templates/topology.j2
+            dest=/etc/ptm.d/topology.dot
+  notify: reload ptmd

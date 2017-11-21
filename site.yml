@@ -23,7 +23,11 @@
     - name: restart netq agent
       command: netq config agent restart
 
+    - name: reload ptmd
+      service: name=ptmd state=reloaded
+
   roles:
     - hostname
     - interfaces
     - routing
+    - ptm

@@ -1,0 +1,9 @@
+## File Managed by Ansible ##
+
+{% if ptm is defined %}
+graph G {
+{% for item in ptm %}
+    {{ item }}
+{% endfor %}
+}
+{% endif %}

@@ -1,5 +1,4 @@
 ## File Managed by Ansible ##
-## Test ##
 !
 username cumulus nopassword
 !
@@ -10,7 +9,7 @@ log syslog
 {% if bgp_fabric is defined %}
 {% if bgp_fabric.neighbor is defined %}
 {% for item in bgp_fabric.neighbor %}
-interface {{ item }}
+interface {{ item }} vrf {{ bgp_fabric.vrf }}
  ipv6 nd ra-interval 10
  no ipv6 nd suppress-ra
 !
@@ -26,6 +25,7 @@ router bgp {{ bgp_fabric.asn }} vrf {{ bgp_fabric.vrf }}
  neighbor fabric capability extended-nexthop
 {% for item in bgp_fabric.neighbor %}
  neighbor {{ item }} interface peer-group fabric
+ neighbor {{ item }} bfd
 {% endfor %}
 
  address-family ipv4 unicast
