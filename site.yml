@@ -26,8 +26,15 @@
     - name: reload ptmd
       service: name=ptmd state=reloaded
 
+    - name: apply timezone
+      command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+
+    - name: restart ntp
+      service: name=ntp state=restarted
+
   roles:
     - hostname
     - interfaces
     - routing
     - ptm
+    - ntp

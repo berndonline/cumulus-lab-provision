@@ -1,0 +1,9 @@
+---
+
+- name: Write Timezone File
+  lineinfile: dest=/etc/timezone line="{{ timezone }}"
+  notify: apply timezone
+
+- name: Generate and Push NTP Config File
+  template: src=ntp.j2 dest=/etc/ntp.conf
+  notify: restart ntp

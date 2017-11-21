@@ -1,5 +1,10 @@
 ---
 
+ntp:
+  - '216.239.35.8'
+
+timezone: Etc/UTC
+
 ptm:
   - '"leaf-1":"swp51" -- "spine-1":"swp1"'
   - '"leaf-2":"swp51" -- "spine-1":"swp2"'
