@@ -1,23 +1,31 @@
 ---
+
 - hosts: all
   remote_user: cumulus
   gather_facts: 'no'
   become: 'yes'
+
   vars:
     ansible_become_pass: "CumulusLinux!"
+
   tasks:
     - name: copy ports.conf
       copy: src=backup/{{inventory_hostname}}/ports.conf dest=/etc/cumulus/
+
     - name: copy interfaces
       copy: src=backup/{{inventory_hostname}}/interfaces dest=/etc/network/
+
     - name: copy Quagga daemons
       copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/quagga/
+
     - name: copy Quagga conf
       copy: src=backup/{{inventory_hostname}}/Quagga.conf dest=/etc/quagga/
 
     - name: reload switchd
       service: name=switchd state=restarted
+
     - name: reload networking
       command: ifreload -a
+
     - name: reload quagga
       service: name=quagga state=restarted

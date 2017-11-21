@@ -1,4 +1,5 @@
 ---
+
 - hosts: spine leaf
   gather_facts: "False"
   user: "cumulus"

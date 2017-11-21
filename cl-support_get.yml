@@ -1,10 +1,13 @@
 ---
+
 - hosts: all
   remote_user: cumulus
   gather_facts: 'no'
   become: 'yes'
+
   vars:
     ansible_become_pass: "CumulusLinux!"
+
   tasks:
     - name: run cl-support
       command: /usr/cumulus/bin/cl-support
