@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: network
   remote_user: cumulus
   gather_facts: 'no'
   become: 'yes'
@@ -38,7 +38,3 @@
         {{
         collected_files.files
         }}
-
-#    - debug: msg="{{ collected_files }}"
-#    - name: Removing CL-Support files
-#      shell: rm -v /var/support/cl_support*

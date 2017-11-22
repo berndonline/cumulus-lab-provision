@@ -15,11 +15,14 @@
     - name: copy interfaces
       copy: src=backup/{{inventory_hostname}}/interfaces dest=/etc/network/
 
-    - name: copy Quagga daemons
-      copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/quagga/
+    - name: copy interfaces_config
+      copy: src=backup/{{inventory_hostname}}/interfaces_config dest=/etc/network/interfaces.d/
 
-    - name: copy Quagga conf
-      copy: src=backup/{{inventory_hostname}}/Quagga.conf dest=/etc/quagga/
+    - name: copy frr daemons
+      copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/frr/
+
+    - name: copy frr conf
+      copy: src=backup/{{inventory_hostname}}/frr.conf dest=/etc/frr/
 
     - name: reload switchd
       service: name=switchd state=restarted
@@ -27,5 +30,5 @@
     - name: reload networking
       command: ifreload -a
 
-    - name: reload quagga
-      service: name=quagga state=restarted
+    - name: reload frr
+      service: name=frr state=restarted

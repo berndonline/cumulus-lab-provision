@@ -27,7 +27,7 @@ router bgp {{ bgp_fabric.asn }} vrf {{ bgp_fabric.vrf }}
  neighbor {{ item }} interface peer-group fabric
  neighbor {{ item }} bfd
 {% endfor %}
-
+ !
  address-family ipv4 unicast
 {% for item in bgp_networks %}
   network {{ item }}
