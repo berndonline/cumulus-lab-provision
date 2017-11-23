@@ -16,7 +16,8 @@
       copy: src=backup/{{inventory_hostname}}/interfaces dest=/etc/network/
 
     - name: copy interfaces_config
-      copy: src=backup/{{inventory_hostname}}/interfaces_config dest=/etc/network/interfaces.d/
+      copy: src=backup/{{inventory_hostname}}/interfaces_config
+            dest=/etc/network/interfaces.d/
 
     - name: copy frr daemons
       copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/frr/
