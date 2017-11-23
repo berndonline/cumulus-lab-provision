@@ -10,20 +10,24 @@
 
   tasks:
     - name: copy ports.conf
-      copy: src=backup/{{inventory_hostname}}/ports.conf dest=/etc/cumulus/
+      copy: src=backup/{{inventory_hostname}}/ports.conf 
+            dest=/etc/cumulus/
 
     - name: copy interfaces
-      copy: src=backup/{{inventory_hostname}}/interfaces dest=/etc/network/
+      copy: src=backup/{{inventory_hostname}}/interfaces 
+            dest=/etc/network/
 
     - name: copy interfaces_config
       copy: src=backup/{{inventory_hostname}}/interfaces_config
             dest=/etc/network/interfaces.d/
 
     - name: copy frr daemons
-      copy: src=backup/{{inventory_hostname}}/daemons dest=/etc/frr/
+      copy: src=backup/{{inventory_hostname}}/daemons 
+            dest=/etc/frr/
 
     - name: copy frr conf
-      copy: src=backup/{{inventory_hostname}}/frr.conf dest=/etc/frr/
+      copy: src=backup/{{inventory_hostname}}/frr.conf 
+            dest=/etc/frr/
 
     - name: reload switchd
       service: name=switchd state=restarted
