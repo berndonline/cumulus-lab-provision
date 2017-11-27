@@ -10,6 +10,6 @@ interfaces:
     vrf: prod-transit
 
   swp52:
-    alias: uplink-spine-1
+    alias: uplink-spine-2
     address: "{{ loopback }}"
     vrf: prod-transit

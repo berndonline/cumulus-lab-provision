@@ -1,0 +1,14 @@
+---
+
+- name: create leaf groups based on clag_pairs
+  group_by: key="{{ item.0 }}"
+  when: inventory_hostname in item.1
+  with_items:
+    - "{{ clag_pairs.items() }}"
+
+- name: include leaf group variables
+  include_vars:
+    file: "group_vars/{{ item.0 }}.yml"
+  when: inventory_hostname in item.1
+  with_items:
+    - "{{ clag_pairs.items() }}"

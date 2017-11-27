@@ -1,7 +1,6 @@
 ---
 
 - hosts: network
-  strategy: free
 
   user: cumulus
   become: 'True'
@@ -33,6 +32,7 @@
       service: name=ntp state=restarted
 
   roles:
+    - leafgroups
     - hostname
     - interfaces
     - routing
