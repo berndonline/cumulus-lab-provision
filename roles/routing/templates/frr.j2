@@ -1,5 +1,6 @@
 ## File Managed by Ansible ##
 !
+frr defaults datacenter
 username cumulus nopassword
 !
 service integrated-vtysh-config
@@ -9,13 +10,13 @@ log syslog
 {% if bgp_fabric is defined %}
 {% if bgp_fabric.neighbor is defined %}
 {% for item in bgp_fabric.neighbor %}
-interface {{ item }} vrf {{ bgp_fabric.vrf }}
+interface {{ item }}
  ipv6 nd ra-interval 10
  no ipv6 nd suppress-ra
 !
 {% endfor %}
 {% endif %}
-router bgp {{ bgp_fabric.asn }} vrf {{ bgp_fabric.vrf }}
+router bgp {{ bgp_fabric.asn }}
  bgp router-id {{ bgp_fabric.router_id }}
  bgp bestpath as-path multipath-relax
  bgp bestpath compare-routerid
@@ -33,4 +34,21 @@ router bgp {{ bgp_fabric.asn }} vrf {{ bgp_fabric.vrf }}
   network {{ item }}
 {% endfor %}
  exit-address-family
+ !
+{% if bgp_evpn is defined %}
+ address-family ipv6 unicast
+  neighbor fabric activate
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor fabric activate
+{% if bgp_advertise_vni is defined %}
+  advertise-all-vni
 {% endif %}
+ exit-address-family
+{% endif %}
+{% endif %}
+!
+line vty
+!
+end

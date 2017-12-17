@@ -1,45 +1,34 @@
 ---
 
-vrf:
-  - prod-transit
-
 interfaces:
   swp1:
     alias: downlink-leaf-1
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp2:
     alias: downlink-leaf-2
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp3:
     alias: downlink-leaf-3
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp4:
     alias: downlink-leaf-4
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp5:
     alias: downlink-leaf-5
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp6:
     alias: downlink-leaf-6
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp51:
     alias: downlink-edge-1
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp52:
     alias: downlink-edge-1
     address: "{{ loopback }}"
-    vrf: prod-transit

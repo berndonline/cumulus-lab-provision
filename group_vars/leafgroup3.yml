@@ -1,1 +1,14 @@
 ---
+
+clagd_vxlan_anycast_ip: 10.255.100.4
+
+bonds:
+  bond0:
+    alias: server-5
+    clag_id: 1
+    bond_slaves: swp1
+
+  bond1:
+    alias: server-6
+    clag_id: 2
+    bond_slaves: swp2

@@ -3,7 +3,10 @@
 {% if loopback is defined %}
 auto lo
 iface lo inet loopback
-address {{ loopback }}
+    address {{ loopback }}
+{% if clagd_vxlan_anycast_ip is defined %}
+    clagd-vxlan-anycast-ip {{ clagd_vxlan_anycast_ip }}
+{% endif %}
 {% endif %}
 
 {% if vrf is defined %}
@@ -11,9 +14,9 @@ address {{ loopback }}
 auto {{ item }}
 iface {{ item }}
     vrf-table auto
+
 {% endfor %}
 {% endif %}
-
 {% if interfaces is defined %}
 {% for port, value in interfaces.items() %}
 auto {{ port }}
@@ -104,8 +107,32 @@ iface bridge
 auto bridge.{{ vlan_id }}
 iface bridge.{{ vlan_id }}
     alias {{ value.alias }}
+{% if value and 'vrf' in value %}
     vrf {{ value.vrf }}
+{% endif %}
     address {{ value.pipv4 }}
     address-virtual {{ value.vmac }} {{ value.vipv4 }}
+{% if value and 'vlan_id' in value %}
+    vlan-id {{ value.vlan_id }}
+{% endif %}
+{% if value and 'vlan_raw_device' in value %}
+    vlan-raw-device {{ value.vlan_raw_device }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+{% if bridge is defined %}
+{% for vxlan_id, value in vxlans.items() %}
+auto vxlan{{ vxlan_id }}
+iface vxlan{{ vxlan_id }}
+    alias {{ value.alias }}
+    vxlan-id {{ vxlan_id }}
+    vxlan-local-tunnelip {{ value.vxlan_local_tunnelip }}
+    bridge-access {{ value.bridge_access }}
+    bridge-learning {{ value.bridge_learning }}
+    bridge-arp-nd-suppress {{ value.bridge_arp_nd_suppress }}
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+
 {% endfor %}
 {% endif %}

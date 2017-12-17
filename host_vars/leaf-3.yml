@@ -4,7 +4,6 @@ loopback: 10.255.0.7/32
 
 bgp_fabric:
   asn: 65003
-  vrf: prod-transit
   router_id: 10.255.0.7
   neighbor:
     - swp51
@@ -12,7 +11,11 @@ bgp_fabric:
 
 bgp_networks:
   - 10.255.0.7/32
+  - 10.255.100.3/32
   - 10.0.2.0/24
+
+bgp_evpn: true
+bgp_advertise_vni: true
 
 peerlink:
   bond_slaves: swp53 swp54
@@ -25,27 +28,29 @@ peerlink:
   clagd_priority: 4096
 
 bridge:
-  ports: peerlink
-  vids: 102
-
-vrf:
-  - prod-transit
+  ports: peerlink bond0 bond1 vxlan10201
+  vids: 102 201
 
 vlans:
   102:
     alias: prod-server-102
-    vrf: prod-transit
     vipv4: 10.0.2.254/24
     vmac: 00:00:5e:00:01:02
     pipv4: 10.0.2.252/24
+
+vxlans:
+  10201:
+    alias: prod-server-10201
+    vxlan_local_tunnelip: 10.255.0.7
+    bridge_access: 201
+    bridge_learning: 'off'
+    bridge_arp_nd_suppress: 'on'
 
 interfaces:
   swp51:
     alias: uplink-spine-1
     address: "{{ loopback }}"
-    vrf: prod-transit
 
   swp52:
     alias: uplink-spine-2
     address: "{{ loopback }}"
-    vrf: prod-transit

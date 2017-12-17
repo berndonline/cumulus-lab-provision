@@ -4,15 +4,19 @@ loopback: 10.255.0.3/32
 
 bgp_fabric:
   asn: 65001
-  vrf: prod-transit
   router_id: 10.255.0.3
   neighbor:
     - swp51
     - swp52
 
 bgp_networks:
+  - 10.0.4.0/24
   - 10.255.0.3/32
+  - 10.255.100.1/32
   - 10.0.255.0/28
+
+bgp_evpn: true
+bgp_advertise_vni: true
 
 peerlink:
   bond_slaves: swp53 swp54
@@ -25,13 +29,27 @@ peerlink:
   clagd_priority: 4096
 
 bridge:
-  ports: peerlink
-  vids: 901
+  ports: peerlink vxlan10201
+  vids: 901 201
 
 vlans:
   901:
     alias: edge-transit-901
-    vrf: prod-transit
     vipv4: 10.0.255.14/28
     vmac: 00:00:5e:00:09:01
     pipv4: 10.0.255.12/28
+  201:
+    alias: prod-server-10201
+    vipv4: 10.0.4.254/24
+    vmac: 00:00:00:00:02:01
+    pipv4: 10.0.4.252/24
+    vlan_id: 201
+    vlan_raw_device: bridge
+
+vxlans:
+  10201:
+    alias: prod-server-10201
+    vxlan_local_tunnelip: 10.255.0.3
+    bridge_access: 201
+    bridge_learning: 'off'
+    bridge_arp_nd_suppress: 'on'

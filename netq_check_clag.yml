@@ -32,7 +32,7 @@
 
      - name: clag members status warning
        fail: msg="Device {{item['hostname']}},
-                 Why node is in warning state? {{item['error']}}"
+                 Why node is in warning state? {{item['warning']}}"
        when: json_output["warningNodes"] is defined
        with_items: "{{json_output['warningNodes']}}"
        run_once: true

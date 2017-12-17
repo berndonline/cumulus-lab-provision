@@ -4,7 +4,6 @@ loopback: 10.255.0.1/32
 
 bgp_fabric:
   asn: 65000
-  vrf: prod-transit
   router_id: 10.255.0.1
   neighbor:
     - swp1
@@ -18,3 +17,5 @@ bgp_fabric:
 
 bgp_networks:
   - 10.255.0.1/32
+
+bgp_evpn: true
