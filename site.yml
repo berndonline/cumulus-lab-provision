@@ -2,7 +2,7 @@
 
 - hosts: network
 
-  user: cumulus
+  user: '{{ ansible_ssh_user }}'
   become: 'True'
   gather_facts: 'False'
 
