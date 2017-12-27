@@ -3,7 +3,7 @@
 loopback: 10.255.0.10/32
 
 bgp_fabric:
-  asn: 65004
+  asn: 65008
   router_id: 10.255.0.10
   neighbor:
     - swp51
