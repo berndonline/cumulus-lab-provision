@@ -8,15 +8,13 @@ bgp_fabric:
   neighbor:
     - swp51
     - swp52
-
-bgp_networks:
-  - 10.0.4.0/24
-  - 10.255.0.3/32
-  - 10.255.100.1/32
-  - 10.0.255.0/28
-
-bgp_evpn: true
-bgp_advertise_vni: true
+  networks:
+    - 10.0.4.0/24
+    - 10.255.0.3/32
+    - 10.255.100.1/32
+    - 10.0.255.0/28
+  evpn: true
+  advertise_vni: true
 
 peerlink:
   bond_slaves: swp53 swp54

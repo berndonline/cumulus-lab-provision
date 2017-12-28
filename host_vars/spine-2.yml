@@ -14,8 +14,6 @@ bgp_fabric:
     - swp6
     - swp51
     - swp52
-
-bgp_networks:
-  - 10.255.0.2/32
-
-bgp_evpn: true
+  networks:
+    - 10.255.0.2/32
+  evpn: true
