@@ -1,0 +1,32 @@
+---
+
+- hosts: spine edge
+  user: '{{ ansible_ssh_user }}'
+  become: 'True'
+  gather_facts: 'False'
+
+  tasks:
+
+    - name: leaf connectivity check from spine switches
+      shell: ping -c 1 '{{ item }}'
+      when: "'spine' in inventory_hostname"
+      with_items:
+        - '10.255.0.3'
+        - '10.255.0.4'
+        - '10.255.0.5'
+        - '10.255.0.6'
+        - '10.255.0.7'
+        - '10.255.0.8'
+        - '10.255.0.9'
+        - '10.255.0.10'
+
+    - name: server connectivity check from spine switches
+      shell: ping -c 1 '{{ item }}'
+      when: "'spine' in inventory_hostname"
+      with_items:
+        - '10.0.1.1'
+        - '10.0.2.1'
+        - '10.0.3.1'
+        - '10.0.4.1'
+        - '10.0.4.2'
+        - '10.0.4.3'

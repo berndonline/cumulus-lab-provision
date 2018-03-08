@@ -7,7 +7,7 @@
   gather_facts: 'False'
 
   vars:
-    netq_topology: 'false'
+    netq_topology: 'true'
 
   handlers:
     - name: reload networking
