@@ -1,6 +1,6 @@
 ---
 
-- hosts: spine edge
+- hosts: spine 
   user: '{{ ansible_ssh_user }}'
   become: 'True'
   gather_facts: 'False'

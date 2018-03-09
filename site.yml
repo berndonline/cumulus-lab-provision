@@ -6,9 +6,6 @@
   become: 'True'
   gather_facts: 'False'
 
-  vars:
-    netq_topology: 'true'
-
   handlers:
     - name: reload networking
       command: "{{item}}"
@@ -24,7 +21,6 @@
 
     - name: restart netq agent
       command: netq config agent restart
-      when: netq_topology == true
 
     - name: reload ptmd
       service: name=ptmd state=reloaded
