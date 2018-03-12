@@ -25,8 +25,10 @@ vagrant up server-5 --color <<< 'server-5 boot' || EXIT=$?
 vagrant up server-6 --color <<< 'server-6 boot' || EXIT=$?
 sleep 600
 export ANSIBLE_FORCE_COLOR=true
+ansible-playbook ../helper_scripts/configure_servers.yml <<< 'ansible playbook' || EXIT=$?
 ansible-playbook ../site.yml <<< 'ansible playbook' || EXIT=$?
 sleep 60
+ansible-playbook ../icmp_check.yml <<< 'icmp check' || EXIT=$?
 ansible-playbook ../netq_check_clag.yml <<< 'netq check' || EXIT=$?
 ansible-playbook ../netq_check_bgp.yml <<< 'netq check' || EXIT=$?
 vagrant destroy -f
