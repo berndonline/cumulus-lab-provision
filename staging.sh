@@ -23,7 +23,7 @@ vagrant up server-3 --color <<< 'server-3 boot' || EXIT=$?
 vagrant up server-4 --color <<< 'server-4 boot' || EXIT=$?
 vagrant up server-5 --color <<< 'server-5 boot' || EXIT=$?
 vagrant up server-6 --color <<< 'server-6 boot' || EXIT=$?
-sleep 600
+sleep 60
 export ANSIBLE_FORCE_COLOR=true
 ansible-playbook ./helper_scripts/configure_servers.yml <<< 'ansible playbook' || EXIT=$?
 ansible-playbook ../site.yml <<< 'ansible playbook' || EXIT=$?
