@@ -19,7 +19,7 @@ vagrant up leaf-6 --color <<< 'leaf-6 boot' || EXIT=$?
 sleep 600
 export ANSIBLE_FORCE_COLOR=true
 export ANSIBLE_FORCE_COLOR=true
-ansible-playbook ../helper_scripts/configure_servers.yml <<< 'ansible playbook' || EXIT=$?
+ansible-playbook ./helper_scripts/configure_servers.yml <<< 'ansible playbook' || EXIT=$?
 ansible-playbook ../site.yml <<< 'ansible playbook' || EXIT=$?
 sleep 60
 ansible-playbook ../icmp_check.yml <<< 'icmp check' || EXIT=$?
